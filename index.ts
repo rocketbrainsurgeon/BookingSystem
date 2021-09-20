@@ -1,9 +1,12 @@
-import express, {Application, Request, Response} from "express";
+import express, {Application} from "express";
 import * as path from "path";
 import * as CONFIG from "./env.json";
 
 const app: Application = express();
 
+/*
+* Node doesn't have much to do in this simple application other than deliver files.
+*/
 app.use(
   CONFIG.HOME + "/",
   express.static(path.join(__dirname, CONFIG.PATH + "/build"))

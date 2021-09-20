@@ -1,13 +1,14 @@
 import * as React from 'react';
 import * as CONFIG from "./env.json";
 
-interface Navigation {
-  name: string,
-  href: string
-}
+/*
+* Module for the layout of the dapp. Uses Tailwindcss framework.
+*/
 
-const navigation: Navigation[] = [];
-
+/*
+* The (View)Reservation and Reserve modules are the heart of the dapp, passed in here.
+* Otherwise nothing special happens in this module.
+*/
 interface Props {
   reservations: JSX.Element,
   reserve: JSX.Element

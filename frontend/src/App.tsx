@@ -8,8 +8,14 @@ import DatePicker from "react-datepicker";
 import { Tailwind, FAQ } from "./Tailwind";
 import "react-datepicker/dist/react-datepicker.css";
 
+/*
+* window.ethereum is injected by MetaMask on page load, so we have to declare it before we can access it.
+*/
 declare const window: any;
 
+/*
+* Interface describing the props object passed to the (View)Reservation and Reserve modules.
+*/
 interface Info {
   rooms: Room[],
   users: User[],
@@ -17,13 +23,19 @@ interface Info {
   signedUp: boolean
 }
 
+/*
+* Interface describing the props object passed to the (View)Reservation and Reserve modules.
+* Callback is for updating the dapp after a change is made (sign up, reservation, cancellation).
+*/
 interface InfoProps {
   info: Info,
   //callback?: React.Dispatch<React.SetStateAction<Info>>
   callback : () => Promise<void>
 }
 
-//reservations
+/*
+* Module for viewing the users' reservations. Ability to cancel from here.
+*/
 const Reservations = ({info, callback}: InfoProps): JSX.Element => {
   const connection = React.useContext(EthersContext);
   const [disabled, setDisabled] = React.useState<boolean>(false);
@@ -54,6 +66,10 @@ interface ReserveInputs {
   date: Date
 }
 
+/*
+* Module for creating reservations.
+* Logic for making a reservation: no double booking the same room & time, can't book in the past, can't book same day.
+*/
 const Reserve = ({info, callback}: InfoProps): JSX.Element => {
   const [state, setState] = useState<ReserveInputs>({room:"",date:new Date()});
   const [excludes, setExcludes] = useState<Date[]>([]);
@@ -118,6 +134,9 @@ const Reserve = ({info, callback}: InfoProps): JSX.Element => {
     </div>;
 }
 
+/*
+* If no wallet is detected, suggest MetaMask.
+*/
 const GetMetaMask = (): JSX.Element => {
   return <div><div className="my-4">Hmm... I can't find any web3 wallet installed, and this dapp requires one.</div>
       <button onClick={()=>window.location = "https://metamask.io"} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Get MetaMask</button>

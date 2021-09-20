@@ -1,3 +1,6 @@
+/*
+* Module for declaring common data types (Room, User, Reservation) and the ABI for the smart contract.
+*/
 export interface Room {
   name: string;
 }
